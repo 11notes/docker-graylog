@@ -1,16 +1,16 @@
 {
-  "image": "11notes/keycloak",
+  "image": "11notes/graylog",
   "platform": "amd64,arm64",
-  "name": "keycloak",
-  "root": "/keycloak",
+  "name": "graylog",
+  "root": "/graylog",
   "semver": {
-    "version": "26.7.4"
+    "version": "7.2.2"
   },
   "readme": {
-    "description": "run Keycloak rootless and distroless",
-    "introduction": "Keycloak provides user federation, strong authentication, user management, fine-grained authorization, and more.",
+    "description": "run graylog rootless and distroless",
+    "introduction": "Graylog is a free and open log management platform.",
     "built": {
-      "keycloak/keycloak": "https://github.com/keycloak/keycloak"
+      "Graylog2/graylog2-server": "https://github.com/Graylog2/graylog2-server"
     },
     "distroless": {
       "layers": [
@@ -19,7 +19,9 @@
       ]
     },
     "comparison": {
-      "image": "keycloak/keycloak"
+      "image": "graylog/graylog:7.2.2"
     }
-  }
+  },
+  "unraid": true,
+  "nobody": true
 }
