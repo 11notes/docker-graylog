@@ -23,7 +23,7 @@
     eleven go build-entrypoint;
 
 # :: GRAYLOG
-  FROM eclipse-temurin:21-jdk-jammy AS build
+  FROM eclipse-temurin:${APP_JAVA_VERSION}-jdk-jammy AS build
   COPY --from=util / /
   ARG APP_VERSION \
       BUILD_SRC=https://downloads.graylog.org/releases/graylog/graylog-${APP_VERSION}.tgz \
@@ -43,13 +43,14 @@
     rm -rf ${BUILD_ROOT}/bin ${BUILD_ROOT}/data ${BUILD_ROOT}/graylog.conf.example /tmp/graylog.tgz*;
 
   RUN set -eux; \
+    GRAYLOG_DOCKER=$(echo "${APP_VERSION}" | awk -F '.' '{print $1"."$2}'); \
     mkdir -p /tmp/config; \
     for f in graylog.conf log4j2.xml; do \
-      curl -sSfL -o /tmp/config/${f} https://raw.githubusercontent.com/Graylog2/graylog-docker/refs/heads/7.2/config/${f}; \
+      curl -sSfL -o /tmp/config/${f} https://raw.githubusercontent.com/Graylog2/graylog-docker/refs/heads/${GRAYLOG_DOCKER}/config/${f}; \
     done;
 
 # :: DISTROLESS JRE
-  FROM eclipse-temurin:21-jdk-jammy AS build-jre
+  FROM eclipse-temurin:${APP_JAVA_VERSION}-jdk-jammy AS build-jre
   COPY --from=util / /
 
   RUN set -eux; \
